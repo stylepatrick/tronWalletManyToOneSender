@@ -4,10 +4,17 @@ services:
         ports:
             - '8999:8080'
         container_name: tron
-        image: tron_wallet_many_to_one_sender:{tag}
+        image: tron_wallet_many_to_one_sender:latest
         restart: always
+        environment:
+            - telegramToken=<Telegram Bot Token>
+            - telegramGroupId=<Telegram GrouId>
+            - mainWallet=<Central Wallet Address>
+            - csvFilePath=/var/wallets.csv
         logging:
           driver: "json-file"
           options:
             max-size: "20m"
             max-file: "5"
+        volumes:
+            - \path\to\wallets.csv:/var/wallets.csv:ro

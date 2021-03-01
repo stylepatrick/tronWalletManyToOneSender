@@ -1,2 +1,8 @@
 node_modules
 npm-debug.log
+wallets.csv
+wallets_example.csv
+.git
+.gitattributes
+.gitignore
+.idea
