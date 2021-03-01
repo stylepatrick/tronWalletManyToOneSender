@@ -4,7 +4,7 @@ services:
         ports:
             - '8999:8080'
         container_name: tron
-        image: tron_wallet_many_to_one_sender:latest
+        image: stylepatrick/tron_wallet_many_to_one_sender:1.0.0
         restart: always
         environment:
             - telegramToken=<Telegram Bot Token>
