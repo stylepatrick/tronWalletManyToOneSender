@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+    tron:
+        ports:
+            - '8999:8080'
+        container_name: tron
+        image: tron_wallet_many_to_one_sender:{tag}
+        restart: always
+        logging:
+          driver: "json-file"
+          options:
+            max-size: "20m"
+            max-file: "5"
