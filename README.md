@@ -12,8 +12,9 @@ Example in docker-compose.yml file.
 # DockerHub
 Pull image from DockerHub and use the docker-compose.yml file to start the application.
 ```
-$ docker pull stylepatrick/tron_wallet_many_to_one_sender
+$ docker pull stylepatrick/tron_wallet_many_to_one_sender:tagname
 ```
+Link: https://hub.docker.com/repository/docker/stylepatrick/tron_wallet_many_to_one_sender
 
 # Deployment
 Use the Dockerfile to build the docker image.
