@@ -22,7 +22,7 @@ Use the Dockerfile to build the docker image.
 $ docker build -t tron_wallet_many_to_one_sender:latest .
 ```
 
-Or use the docker-compose.yml file to deploy the application.
+and use the docker-compose.yml file to deploy the application.
 ```
 $ docker-compose up -d
 ```
