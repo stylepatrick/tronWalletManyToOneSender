@@ -4,11 +4,11 @@ services:
         ports:
             - '8999:8080'
         container_name: tron
-        image: stylepatrick/tron_wallet_many_to_one_sender:1.0.0
+        image: stylepatrick/tron_wallet_many_to_one_sender:{tag}
         restart: always
         environment:
             - telegramToken=<Telegram Bot Token>
-            - telegramGroupId=<Telegram GrouId>
+            - telegramChatId=<Telegram GrouId>
             - mainWallet=<Central Wallet Address>
             - csvFilePath=/var/wallets.csv
         logging:

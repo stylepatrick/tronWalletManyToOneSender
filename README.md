@@ -3,11 +3,17 @@ Send every 30 seconds TRX coins from a list of csv TRON-Wallets to a central TRO
 
 # Environment
 - telegramToken: Telegram Token from your Bot.
-- telegramGroupId: Telegram Group ID to revice messages from your Bot.
+- telegramChatId: Telegram Group ID to revice messages from your Bot.
 - mainWallet: Central Wallet which should revice all TRX Coins from your .csv wallets list.
 - csvFilePath: Path to your wallets.csv file. Example in wallets_example.csv file.
 
 Example in docker-compose.yml file.
+
+# Telegram Commands
+- /status: Get status of Service. Can be running or stopped.
+- /schedulerStart: Starts the scheduler if stopped.
+- /schedulerStop: Stops the scheduler if running.
+- /runOnce: Run once through the wallet.csv list. Only possible if scheduler is stopped.
 
 # DockerHub
 Pull image from DockerHub and use the docker-compose.yml file to start the application.

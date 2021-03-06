@@ -10,16 +10,78 @@ const solidityNode = new HttpProvider("https://api.trongrid.io");
 const eventServer = new HttpProvider("https://api.trongrid.io");
 
 const telegramToken = process.env.telegramToken;
-const telegramGroupId = process.env.telegramGroupId;
+const telegramChatId = process.env.telegramChatId;
 const bot = new TelegramBot(telegramToken, {polling: true});
 
 const map = new Map();
+
+var j = null;
+var isSchedulerRunning = false;
 
 // All coins from the csv wallets will get send to this Address
 const mainWallet = process.env.mainWallet;
 
 // CSV File Path
 const csvFilePath = process.env.csvFilePath;
+
+// Scheduler start with telegram bot command /schedulerStart
+bot.onText(/\/schedulerStart/, (msg) => {
+    var datetime = new Date();
+    const chatId = telegramChatId;
+    var resp = '';
+    if (!isSchedulerRunning) {
+        schedulerStart();
+        resp = 'Scheduler started! ' + datetime;
+    } else {
+        resp = "Scheduler already running!"
+    }
+    console.log('Telegram Bot: ' + resp)
+    bot.sendMessage(chatId, resp);
+});
+
+// Scheduler stop with telegram bot command /schedulerStop
+bot.onText(/\/schedulerStop/, (msg) => {
+    var datetime = new Date();
+    const chatId = telegramChatId;
+    var resp = '';
+    if (isSchedulerRunning) {
+        j.cancel();
+        isSchedulerRunning = false;
+        resp = 'Scheduler stopped! ' + datetime;
+    } else {
+        resp = "Scheduler already stopped!"
+    }
+    console.log('Telegram Bot: ' + resp)
+    bot.sendMessage(chatId, resp);
+});
+
+// Scheduler run once with telegram bot command /runOnce
+bot.onText(/\/runOnce/, (msg) => {
+    var datetime = new Date();
+    const chatId = telegramChatId;
+    var resp = '';
+    if (!isSchedulerRunning) {
+        init();
+        resp = 'Run once started! ' + datetime;
+    } else {
+        resp = "Service in run mode! Command only possible if scheduler is stopped!"
+    }
+    console.log('Telegram Bot: ' + resp)
+    bot.sendMessage(chatId, resp);
+});
+
+// Get scheduler status with telegram bot command /status
+bot.onText(/\/status/, (msg) => {
+    const chatId = telegramChatId;
+    var resp = '';
+    if (!isSchedulerRunning) {
+        resp = 'Service not running!';
+    } else {
+        resp = "Service running!"
+    }
+    console.log('Telegram Bot: ' + resp)
+    bot.sendMessage(chatId, resp);
+});
 
 
 async function buildTronWeb(wallet) {
@@ -54,16 +116,18 @@ async function init() {
         if (walletBalance >= 1100000) {
             const receipt = await sendTrx(tronWeb, wallet, walletBalance);
             console.log('Receipt:', receipt);
-            bot.sendMessage(telegramGroupId, 'Wallet: ' + wallet.address + '\n Balance: ' + walletBalance / 1000000 + ' TRX \n Receipt: ' + 'https://tronscan.org/#/transaction/' + receipt.txid);
+            bot.sendMessage(telegramChatId, 'Wallet: ' + wallet.address + '\n Balance: ' + walletBalance / 1000000 + ' TRX \n Receipt: ' + 'https://tronscan.org/#/transaction/' + receipt.txid);
         }
-        console.log('----------------------------------------------------------');
+        console.log('-------------------------------------------------------------------------------------------------------');
     }
-    console.log('----------------------------------------------------------');
+    var datetime = new Date();
+    console.log('-----------------------------' + datetime + '-----------------------------');
 }
 
 // sheduler to trigger every 30 seconds the process
 function schedulerStart() {
-    schedule.scheduleJob('*/30 * * * * *', async function () {
+    isSchedulerRunning = true;
+    j = schedule.scheduleJob('*/30 * * * * *', async function () {
         init();
     });
 }
