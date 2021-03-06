@@ -10,10 +10,10 @@ Send every 30 seconds TRX coins from a list of csv TRON-Wallets to a central TRO
 Example in docker-compose.yml file.
 
 # Telegram Commands
-- /status: Get status of Service. Can be running or stopped.
-- /schedulerStart: Starts the scheduler if stopped.
-- /schedulerStop: Stops the scheduler if running.
-- /runOnce: Run once through the wallet.csv list. Only possible if scheduler is stopped.
+- /status: Get status of service. Can be running or stopped.
+- /start: Starts the service scheduler if stopped.
+- /stop: Stops the service scheduler if running.
+- /run: Run once through the wallet.csv list. Only possible if service scheduler is stopped.
 
 # DockerHub
 Pull image from DockerHub and use the docker-compose.yml file to start the application.

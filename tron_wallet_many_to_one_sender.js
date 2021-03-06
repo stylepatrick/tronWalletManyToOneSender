@@ -24,47 +24,47 @@ const mainWallet = process.env.mainWallet;
 // CSV File Path
 const csvFilePath = process.env.csvFilePath;
 
-// Scheduler start with telegram bot command /schedulerStart
-bot.onText(/\/schedulerStart/, (msg) => {
+// Start scheduler with telegram bot command /start
+bot.onText(/\/start/, (msg) => {
     var datetime = new Date();
     const chatId = telegramChatId;
     var resp = '';
     if (!isSchedulerRunning) {
         schedulerStart();
-        resp = 'Scheduler started! ' + datetime;
+        resp = 'Service with scheduler started! ' + datetime;
     } else {
-        resp = "Scheduler already running!"
+        resp = "Service already running!"
     }
     console.log('Telegram Bot: ' + resp)
     bot.sendMessage(chatId, resp);
 });
 
-// Scheduler stop with telegram bot command /schedulerStop
-bot.onText(/\/schedulerStop/, (msg) => {
+// Stop scheduler with telegram bot command /stop
+bot.onText(/\/stop/, (msg) => {
     var datetime = new Date();
     const chatId = telegramChatId;
     var resp = '';
     if (isSchedulerRunning) {
         j.cancel();
         isSchedulerRunning = false;
-        resp = 'Scheduler stopped! ' + datetime;
+        resp = 'Service with scheduler stopped! ' + datetime;
     } else {
-        resp = "Scheduler already stopped!"
+        resp = "Service already stopped!"
     }
     console.log('Telegram Bot: ' + resp)
     bot.sendMessage(chatId, resp);
 });
 
-// Scheduler run once with telegram bot command /runOnce
-bot.onText(/\/runOnce/, (msg) => {
+// Run once through wallet.csv list with telegram bot command /run
+bot.onText(/\/run/, (msg) => {
     var datetime = new Date();
     const chatId = telegramChatId;
     var resp = '';
     if (!isSchedulerRunning) {
         init();
-        resp = 'Run once started! ' + datetime;
+        resp = 'Run started! ' + datetime;
     } else {
-        resp = "Service in run mode! Command only possible if scheduler is stopped!"
+        resp = "Service in run mode! Command only possible if service is stopped!"
     }
     console.log('Telegram Bot: ' + resp)
     bot.sendMessage(chatId, resp);
@@ -124,7 +124,7 @@ async function init() {
     console.log('-----------------------------' + datetime + '-----------------------------');
 }
 
-// sheduler to trigger every 30 seconds the process
+// Scheduler to trigger every 30 seconds the process
 function schedulerStart() {
     isSchedulerRunning = true;
     j = schedule.scheduleJob('*/30 * * * * *', async function () {
@@ -132,7 +132,7 @@ function schedulerStart() {
     });
 }
 
-// read wallets from csv to map
+// Read wallets from csv to map
 fs.createReadStream(csvFilePath)
     .pipe(csv())
     .on('data', (row) => {
