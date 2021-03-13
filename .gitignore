@@ -104,6 +104,6 @@ dist
 .tern-port
 
 # IDEs and editors
-/.idea
+.idea/
 
 wallets.csv
