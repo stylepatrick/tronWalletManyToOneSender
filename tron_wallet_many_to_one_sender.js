@@ -12,6 +12,7 @@ const eventServer = new HttpProvider("https://api.trongrid.io");
 const telegramToken = process.env.telegramToken;
 const telegramChatId = process.env.telegramChatId;
 const bot = new TelegramBot(telegramToken, {polling: true});
+const interval = process.env.interval;
 
 const map = new Map();
 
@@ -124,10 +125,10 @@ async function init() {
     console.log('-----------------------------' + datetime + '-----------------------------');
 }
 
-// Scheduler to trigger every 30 seconds the process
+// Scheduler to trigger every n seconds the process
 function schedulerStart() {
     isSchedulerRunning = true;
-    j = schedule.scheduleJob('*/30 * * * * *', async function () {
+    j = schedule.scheduleJob(interval, async function () {
         init();
     });
 }

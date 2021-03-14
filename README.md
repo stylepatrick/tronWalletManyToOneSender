@@ -1,11 +1,12 @@
 # Tron Wallet Many To One Sender
-Send every 30 seconds TRX coins from a list of csv TRON-Wallets to a central TRON-Wallet. Information about transactions (trxid) will be sent via a Telegram-Bot.
+Send every n seconds TRX coins from a list of csv TRON-Wallets to a central TRON-Wallet. Information about transactions (trxid) will be sent via a Telegram-Bot.
 
 # Environment
 - telegramToken: Telegram Token from your Bot.
-- telegramChatId: Telegram Group ID to revice messages from your Bot.
-- mainWallet: Central Wallet which should revice all TRX Coins from your .csv wallets list.
+- telegramChatId: Telegram Group ID to receive messages from your Bot.
+- mainWallet: Central Wallet which should receive all TRX Coins from your .csv wallets list.
 - csvFilePath: Path to your wallets.csv file. Example in wallets_example.csv file.
+- interval: Interval of scheduler. (ex. every 30 seconds: */30 * * * * *)
 
 Example in docker-compose.yml file.
 

@@ -11,6 +11,7 @@ services:
             - telegramChatId=<Telegram GrouId>
             - mainWallet=<Central Wallet Address>
             - csvFilePath=/var/wallets.csv
+            - interval=<interval of scheduler>
         logging:
           driver: "json-file"
           options:
