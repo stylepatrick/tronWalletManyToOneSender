@@ -116,8 +116,10 @@ async function init() {
         console.log('Wallet: ' + wallet.address + ' Balance: ' + walletBalance);
         if (walletBalance >= 1100000) {
             const receipt = await sendTrx(tronWeb, wallet, walletBalance);
-            console.log('Receipt:', receipt);
-            bot.sendMessage(telegramChatId, 'Wallet: ' + wallet.address + '\n Balance: ' + walletBalance / 1000000 + ' TRX \n Receipt: ' + 'https://tronscan.org/#/transaction/' + receipt.txid);
+            if (receipt) {
+                console.log('Receipt:', receipt);
+                bot.sendMessage(telegramChatId, 'Wallet: ' + wallet.address + '\n Balance: ' + walletBalance / 1000000 + ' TRX \n Receipt: ' + 'https://tronscan.org/#/transaction/' + receipt.txid);
+            }
         }
         console.log('-------------------------------------------------------------------------------------------------------');
     }
