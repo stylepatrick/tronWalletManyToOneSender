@@ -91,12 +91,12 @@ async function buildTronWeb(wallet) {
 }
 
 async function getBalance(tronWeb, wallet) {
-    const walletBalance = await tronWeb.trx.getBalance(wallet.address).catch(err => console.error(err));
+    const walletBalance = await tronWeb.trx.getUnconfirmedBalance(wallet.address).catch(err => console.error(err));
     return walletBalance;
 }
 
 async function sendTrx(tronWeb, wallet, walletBalance) {
-    tradeobj = await tronWeb.transactionBuilder.sendTrx(mainWallet, walletBalance - 1000000, wallet.address, 0).catch(err => console.error(err));
+    tradeobj = await tronWeb.transactionBuilder.sendTrx(mainWallet, walletBalance, wallet.address, 0).catch(err => console.error(err));
     let signedtxn = null;
     // Check the access permission from the csv wallets and make the sign request
     if (wallet.access === 'multiSign') {
